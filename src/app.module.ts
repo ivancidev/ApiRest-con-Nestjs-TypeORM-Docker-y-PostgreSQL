@@ -8,6 +8,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.POSTGRE_HOST,
+      port: parseInt(process.env.POSTGRE_PORT) || 5432,
+      password: process.env.POSTGRE_PASSWORD,
+      username: process.env.POSTGRE_USER,
+      database: process.env.POSTGRE_DB_NAME,
+      synchronize: true,
+      logging: true,
+      autoLoadEntities: true,
+      entities: ['./dist/**/*.entity{.ts,.js}'],
+    }),
     UserModule
   ],
   controllers: [AppController],
