@@ -1,0 +1,15 @@
+compiled output
+/node_modules
+./postgres_data
+
+commands
+
+# OS
+.DS_Store
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

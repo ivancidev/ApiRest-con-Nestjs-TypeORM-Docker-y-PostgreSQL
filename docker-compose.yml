@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+
+  postgres_db:
+    image: postgres:16
+    container_name: postgresDB_student
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRE_PASSWORD}
+      POSTGRES_USER: ${POSTGRE_USER}
+      POSTGRES_DB: ${POSTGRE_DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql
