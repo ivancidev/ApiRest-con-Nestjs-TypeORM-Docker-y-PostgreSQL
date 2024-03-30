@@ -1,7 +1,7 @@
 compiled output
 /node_modules
 ./postgres_data
-
+/dist
 commands
 
 # OS
