@@ -11,13 +11,13 @@ export class Student {
   @Column({ type: 'varchar', length: 30 })
   lastName: string;
 
-  @Column({ type: 'varchar', length: 10 })
+  @Column({ type: 'varchar', length: 30 })
   code: string;
 
   @Column({ type: 'varchar', length: 30 })
   email: string;
 
   @Exclude()
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 90 })
   password: string;
 }

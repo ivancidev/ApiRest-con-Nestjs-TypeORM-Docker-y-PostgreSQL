@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Student } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { encodePassword } from 'src/common/bcrypt';
 
 @Injectable()
 export class UserService {
@@ -24,14 +25,16 @@ export class UserService {
       )
     }
 
-    const newUser = await this.userRepository.create(createUserDto);
-    if(!newUser){
-      throw new HttpException("Failed to create user", HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-
-    return{
-      message: "Student created successfully"
-    }
+    try {
+      const hashedPassword = encodePassword(createUserDto.password);
+      const newUser = await this.userRepository.create({ ...createUserDto, password: hashedPassword });
+      if (!newUser) {
+          throw new Error('Failed to create user');
+      }
+      return this.userRepository.save(newUser);
+  } catch (error) {
+      throw new HttpException('Failed to create user', HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 
   }
 
