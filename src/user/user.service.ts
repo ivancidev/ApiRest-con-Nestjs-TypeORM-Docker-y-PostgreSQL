@@ -21,7 +21,7 @@ export class UserService {
     if(isAlreadyExist){
       throw new HttpException(
         "Email already registered",
-        HttpStatus.UNAUTHORIZED
+        HttpStatus.UNAUTHORIZED //buscar otra opcion
       )
     }
 

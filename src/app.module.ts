@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AccessLogModule } from './access-log/access-log.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       entities: ['./dist/**/*.entity{.ts,.js}'],
     }),
-    UserModule
+    UserModule,
+    AccessLogModule,
   ],
   controllers: [AppController],
   providers: [AppService],
