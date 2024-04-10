@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccessLogModule } from './access-log/access-log.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AccessLogModule } from './access-log/access-log.module';
     }),
     UserModule,
     AccessLogModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
