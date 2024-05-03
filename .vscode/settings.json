@@ -9,6 +9,16 @@
             "name": "docker-con-postgres",
             "username": "ivanci",
             "password": "ivanci123"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "nestjs",
+            "database": "students",
+            "username": "ivanci",
+            "password": "ivanci123"
         }
     ]
 }
