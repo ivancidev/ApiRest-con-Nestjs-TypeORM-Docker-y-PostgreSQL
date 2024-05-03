@@ -4,6 +4,7 @@ services:
 
   postgres_db:
     image: postgres:16
+    container_name: image_postgres
     restart: always
     env_file:
       - .env
@@ -16,6 +17,7 @@ services:
     volumes:
       - ./postgres_data:/var/lib/postgresql
   nestjs_app:
+    container_name: nestjs_app
     build:
       dockerfile: Dockerfile
       context: .
