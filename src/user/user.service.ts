@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Student } from './entities/user.entity';
@@ -13,29 +18,33 @@ export class UserService {
     private userRepository: Repository<Student>,
   ) {}
   async create(createUserDto: CreateUserDto) {
-
     const isAlreadyExist = await this.userRepository.findOne({
-      where: { email: createUserDto.email}
+      where: { email: createUserDto.email },
     });
 
-    if(isAlreadyExist){
+    if (isAlreadyExist) {
       throw new HttpException(
-        "Email already registered",
-        HttpStatus.UNAUTHORIZED //buscar otra opcion
-      )
+        'Email already registered',
+        HttpStatus.UNAUTHORIZED, //buscar otra opcion
+      );
     }
 
     try {
       const hashedPassword = encodePassword(createUserDto.password);
-      const newUser = await this.userRepository.create({ ...createUserDto, password: hashedPassword });
+      const newUser = await this.userRepository.create({
+        ...createUserDto,
+        password: hashedPassword,
+      });
       if (!newUser) {
-          throw new Error('Failed to create user');
+        throw new Error('Failed to create user');
       }
       return this.userRepository.save(newUser);
-  } catch (error) {
-      throw new HttpException('Failed to create user', HttpStatus.INTERNAL_SERVER_ERROR);
-  }
-
+    } catch (error) {
+      throw new HttpException(
+        'Failed to create user',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   findAll() {
@@ -48,7 +57,6 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`No user found with id: ${id}`);
     }
-
     return user;
   }
 
@@ -58,23 +66,16 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`No user found with id: ${id}`);
     }
-
     user.email = updateUserDto.email || user.email;
     user.name = updateUserDto.name || user.name;
     user.password = updateUserDto.password || user.password;
     user.lastName = updateUserDto.lastName || user.lastName;
     user.code = updateUserDto.code || user.code;
 
-
-
     return this.userRepository.save(user);
   }
 
   async remove(id: string) {
-    const userToRemove = await this.userRepository.findOne({ where: { id } });
-    if (!userToRemove) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-    return this.userRepository.remove(userToRemove);
+    return await this.userRepository.softDelete(id);
   }
 }
