@@ -27,4 +27,4 @@ services:
     depends_on:
       - postgres_db
     volumes:
-      - ./:/var/lib/postgresql
+      - ./src:/usr/src/app/src
