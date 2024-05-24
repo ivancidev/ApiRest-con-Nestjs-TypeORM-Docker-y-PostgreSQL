@@ -1,13 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { UUID } from 'crypto';
 import { Student } from 'src/user/entities/user.entity';
+import { Location } from 'src/location/entities/location.entity';
 @Entity()
 export class AccessLog {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: UUID;
 
   @ManyToOne(() => Student, (student) => student.accessLog)
   user: string;
+
+  @ManyToOne(() => Location, (location) => location.accessLog)
+  location: number;
 
   @CreateDateColumn({
     type: 'timestamp',
@@ -22,8 +26,7 @@ export class AccessLog {
   })
   updated_at: Date;
 
-  @Exclude()
   @DeleteDateColumn()
-  deletedAt: Date;
+  public deletedAt: Date;
 }
 
