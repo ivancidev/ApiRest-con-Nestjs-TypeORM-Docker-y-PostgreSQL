@@ -6,10 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccessLogModule } from './access-log/access-log.module';
 import { LocationModule } from './location/location.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRE_HOST,
@@ -25,6 +28,7 @@ import { LocationModule } from './location/location.module';
     UserModule,
     AccessLogModule,
     LocationModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
