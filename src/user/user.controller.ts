@@ -58,6 +58,11 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
+  @Get(':email')
+  async findByEmail(@Param('email') email: string) {
+    return this.userService.findUserByEmail(email);
+  }
+
   @ApiResponse({
     status: 200,
     description: 'User successfully deleted',

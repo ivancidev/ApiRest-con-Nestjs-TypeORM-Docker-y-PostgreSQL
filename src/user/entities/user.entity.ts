@@ -1,12 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { AccessLog } from 'src/access-log/entities/access-log.entity';
+import * as bcrypt from 'bcrypt'
 @Entity()
 export class Student {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(()=> AccessLog, (accessLog) => accessLog.user)
+  @OneToMany(()=> AccessLog, (accessLog) => accessLog.user, { cascade: true })
   accessLog: AccessLog[]
   
   @Column({ type: 'varchar', length: 30 })
@@ -40,4 +41,8 @@ export class Student {
 
   @DeleteDateColumn()
   public deletedAt: Date;
+
+  async validatePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 }
